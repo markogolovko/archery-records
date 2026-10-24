@@ -3,7 +3,7 @@
 // templates never need to know a database was involved.
 //
 // Team members are nested as `participants: [...]` ordered by `position`,
-// each carrying their own club and leg_scores for that record.
+// each carrying their own affiliation and leg_scores for that record.
 
 import Database from "better-sqlite3";
 import path from "node:path";
@@ -33,10 +33,12 @@ export default function () {
         SELECT rp.position, rp.leg_scores, a.birth_date, a.birth_year,
           a.first_name || ' ' || a.surname AS athlete_name,
           a.first_name_latin || ' ' || a.surname_latin AS athlete_name_latin,
-          cl.name AS club_name, cl.name_en AS club_name_en, cl.name_pl AS club_name_pl
+          aff.display_name_ua AS affiliation_name_ua,
+          aff.display_name_en AS affiliation_name_en,
+          aff.display_name_pl AS affiliation_name_pl
     FROM record_participants rp
     JOIN athletes a ON a.id = rp.athlete_id
-    LEFT JOIN clubs cl ON cl.id = rp.club_id
+    LEFT JOIN affiliations aff ON aff.id = rp.affiliation_id
     WHERE rp.record_id = ?
     ORDER BY rp.position
   `);

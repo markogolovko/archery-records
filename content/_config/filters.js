@@ -85,11 +85,11 @@ export default function(eleventyConfig) {
 		return position > 0 ? "*".repeat(position) : "";
 	});
 
-	eleventyConfig.addFilter("clubNames", function (participants, locale) {
+	eleventyConfig.addFilter("affiliationNames", function (participants, locale) {
 		const names = (participants || []).map(participant => {
-			if (locale === "en") return participant.club_name_en || participant.club_name;
-			if (locale === "pl") return participant.club_name_pl || participant.club_name;
-			return participant.club_name;
+			if (locale === "en") return participant.affiliation_name_en || participant.affiliation_name_ua;
+			if (locale === "pl") return participant.affiliation_name_pl || participant.affiliation_name_ua;
+			return participant.affiliation_name_ua;
 		}).filter(Boolean);
 		return [...new Set(names)];
 	});

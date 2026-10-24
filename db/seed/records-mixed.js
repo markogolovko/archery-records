@@ -1,6 +1,6 @@
-const team = (key, scope, category, discipline, competition, result_score, club, athletes, leg_scores = null, format = 'indoor') => ({
+const team = (key, scope, category, discipline, competition, result_score, affiliation, athletes, leg_scores = null, format = 'indoor') => ({
   key, scope, category, format, discipline, competition, result_score,
-  participants: athletes.map((athlete, index) => ({ athlete, club, position: index + 1, leg_scores: leg_scores?.[index] ?? null })),
+  participants: athletes.map((athlete, index) => ({ athlete, affiliation, position: index + 1, leg_scores: leg_scores?.[index] ?? null })),
 });
 
 export default [

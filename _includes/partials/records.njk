@@ -31,7 +31,7 @@
           <tr>
             <th>{{ labels.discipline }}</th>
             <th>{{ labels.athletes }}</th>
-            <th>{{ labels.club }}</th>
+            <th>{{ labels.affiliation }}</th>
             <th>{{ labels.competition }}</th>
             <th>{{ labels.date }}</th>
             <th class="record-result">{{ labels.result }}</th>
@@ -47,9 +47,9 @@
                 {% if locale == "en" %}{{ participant.athlete_name_latin }}{% elif locale == "pl" %}{{ participant.athlete_name_latin }}{% else %}{{ participant.athlete_name }}{% endif %}{% if participant.leg_scores %}<small class="record-leg-scores">({{ participant.leg_scores }})</small>{% endif %}{% if not loop.last %}<br>{% endif %}
               {% endfor %}
             </td>
-            <td data-label="{{ labels.club }}">
-              {% for club in record.participants | clubNames(locale) %}
-                {{ club }}{% if not loop.last %}<br>{% endif %}
+            <td data-label="{{ labels.affiliation }}">
+              {% for affiliation in record.participants | affiliationNames(locale) %}
+                {{ affiliation }}{% if not loop.last %}<br>{% endif %}
               {% endfor %}
             </td>
             <td data-label="{{ labels.competition }}">
@@ -77,9 +77,9 @@
                 {% if locale == "en" %}{{ participant.athlete_name_latin }}{% elif locale == "pl" %}{{ participant.athlete_name_latin }}{% else %}{{ participant.athlete_name }}{% endif %}{% if participant.leg_scores %}<small class="record-leg-scores">({{ participant.leg_scores }})</small>{% endif %}{% if not loop.last %}<br>{% endif %}
               {% endfor %}
             </td>
-            <td data-label="{{ labels.club }}">
-              {% for club in previousRecord.participants | clubNames(locale) %}
-                {{ club }}{% if not loop.last %}<br>{% endif %}
+            <td data-label="{{ labels.affiliation }}">
+              {% for affiliation in previousRecord.participants | affiliationNames(locale) %}
+                {{ affiliation }}{% if not loop.last %}<br>{% endif %}
               {% endfor %}
             </td>
             <td data-label="{{ labels.competition }}">

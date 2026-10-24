@@ -22,13 +22,13 @@ db.pragma("foreign_keys = ON");
 
 const schema = fs.readFileSync(path.join(root, "db", "schema.sql"), "utf8");
 const seedDir = path.join(root, "db", "seed");
-const [{ default: athletes }, { default: cities }, { default: clubs },
+const [{ default: athletes }, { default: cities }, { default: affiliations },
 	{ default: competitions }, { default: disciplines }, { default: menRecords },
 	{ default: womenRecords }, { default: mixedRecords }, { default: masters50Records }, { default: recordI18n }] =
 	await Promise.all([
 		import(path.join(seedDir, "athletes.js")),
 		import(path.join(seedDir, "cities.js")),
-		import(path.join(seedDir, "clubs.js")),
+		import(path.join(seedDir, "affiliations.js")),
 		import(path.join(seedDir, "competitions.js")),
 		import(path.join(seedDir, "disciplines.js")),
 		import(path.join(seedDir, "records-men.js")),
@@ -55,18 +55,18 @@ db.transaction(() => {
 	for (const row of athletes) insert("athletes", ["key", "first_name", "surname", "first_name_latin", "surname_latin", "birth_date", "birth_year", "birth_source_url"], [row.key, row.first_name, row.surname, row.first_name_latin, row.surname_latin, row.birth_date ?? null, row.birth_year ?? null, row.birth_source_url ?? null]);
 	for (const row of cities) insert("cities", ["key", "name", "name_en", "name_pl"], [row.key, row.name, row.name_en, row.name_pl]);
 	const cityIds = ids("cities");
-	for (const row of clubs) insert("clubs", ["key", "name", "name_en", "name_pl", "city"], [row.key, row.name, row.name_en, row.name_pl, ref(cityIds, row.city, "city")]);
+	for (const row of affiliations) insert("affiliations", ["key", "kind", "full_name", "full_name_language", "display_name_ua", "display_name_en", "display_name_pl", "city"], [row.key, row.kind, row.full_name ?? null, row.full_name_language ?? null, row.display_name_ua, row.display_name_en, row.display_name_pl, ref(cityIds, row.city, "city")]);
 	for (const row of competitions) insert("competitions", ["key", "city", "label", "label_en", "label_pl", "date_start", "date_end", "date_raw", "source_url"], [row.key, ref(cityIds, row.city, "city"), row.label, row.label_en, row.label_pl, row.date_start, row.date_end, row.date_raw, row.source_url ?? null]);
 	for (const row of disciplines) insert("disciplines", ["key", "team_size"], [row.key, row.team_size]);
 
 	const athleteIds = ids("athletes");
-	const clubIds = ids("clubs");
+	const affiliationIds = ids("affiliations");
 	const competitionIds = ids("competitions");
 	const disciplineIds = ids("disciplines");
 	for (const row of [...menRecords, ...womenRecords, ...mixedRecords, ...masters50Records]) {
 		insert("records", ["key", "scope", "category", "format", "discipline_id", "competition_id", "result_score", "variant_key"], [row.key, row.scope, row.category, row.format, ref(disciplineIds, row.discipline, "discipline"), ref(competitionIds, row.competition, "competition"), row.result_score, row.variant_key ?? null]);
 		const recordId = db.prepare("SELECT id FROM records WHERE key = ?").get(row.key).id;
-		for (const participant of row.participants) insert("record_participants", ["record_id", "athlete_id", "club_id", "position", "leg_scores"], [recordId, ref(athleteIds, participant.athlete, "athlete"), ref(clubIds, participant.club, "club"), participant.position, participant.leg_scores ?? null]);
+		for (const participant of row.participants) insert("record_participants", ["record_id", "athlete_id", "affiliation_id", "position", "leg_scores"], [recordId, ref(athleteIds, participant.athlete, "athlete"), ref(affiliationIds, participant.affiliation, "affiliation"), participant.position, participant.leg_scores ?? null]);
 	}
 	const recordIds = ids("records");
 	for (const row of recordI18n) insert("record_i18n", ["record_id", "locale", "notes"], [recordIds.get(row.record), row.locale, row.notes]);

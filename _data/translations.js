@@ -27,9 +27,9 @@ export default {
       ,finals_50m_15: { ua: 'Фінали 50 м (15 стріл)', en: '50 m finals (15 arrows)', pl: 'Finały 50 m (15 strzał)' }
     },
     headers: {
-      ua: { discipline: 'Вправа', athletes: 'Спортсмени', club: 'Представництво', result: 'Результат', competition: 'Змагання', date: 'Дата', empty: 'Записів поки немає.' },
-      en: { discipline: 'Discipline', athletes: 'Athletes', club: 'Affiliation', result: 'Result', competition: 'Competition', date: 'Date', empty: 'No records yet.' },
-      pl: { discipline: 'Konkurencja', athletes: 'Zawodnicy', club: 'Reprezentacja', result: 'Wynik', competition: 'Zawody', date: 'Data', empty: 'Brak rekordów.' }
+      ua: { discipline: 'Вправа', athletes: 'Спортсмени', affiliation: 'Представництво', result: 'Результат', competition: 'Змагання', date: 'Дата', empty: 'Записів поки немає.' },
+      en: { discipline: 'Discipline', athletes: 'Athletes', affiliation: 'Affiliation', result: 'Result', competition: 'Competition', date: 'Date', empty: 'No records yet.' },
+      pl: { discipline: 'Konkurencja', athletes: 'Zawodnicy', affiliation: 'Reprezentacja', result: 'Wynik', competition: 'Zawody', date: 'Data', empty: 'Brak rekordów.' }
     },
     types: {
       ua: { individual: 'Індивідуальні', team: 'Командні' },

@@ -1,2 +1,4 @@
 - extend and restructure database 
 - check data
+- should I connected cities to countries 
+- should I add word (oblast?) check official pages

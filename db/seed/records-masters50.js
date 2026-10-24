@@ -1,10 +1,10 @@
-const individual = (key, discipline, competition, result_score, athlete, club = null, variant_key = null) => ({
+const individual = (key, discipline, competition, result_score, athlete, affiliation = null, variant_key = null) => ({
   key, scope: 'national', category: 'masters50', format: 'outdoor', discipline, competition, result_score, variant_key,
-  participants: [{ athlete, club, position: 1 }],
+  participants: [{ athlete, affiliation, position: 1 }],
 });
-const team = (key, scope, discipline, competition, result_score, club, athletes, leg_scores = null) => ({
+const team = (key, scope, discipline, competition, result_score, affiliation, athletes, leg_scores = null) => ({
   key, scope, category: 'masters50', format: 'outdoor', discipline, competition, result_score,
-  participants: athletes.map((athlete, index) => ({ athlete, club, position: index + 1, leg_scores: leg_scores?.[index] ?? null })),
+  participants: athletes.map((athlete, index) => ({ athlete, affiliation, position: index + 1, leg_scores: leg_scores?.[index] ?? null })),
 });
 
 export default [

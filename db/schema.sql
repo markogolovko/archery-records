@@ -1,11 +1,11 @@
 -- archery-records relational schema
 -- Design notes:
---  * athletes/clubs/competitions are entities referenced by id -> no name duplication
+--  * athletes/affiliations/competitions are entities referenced by id -> no name duplication
 --  * "Вправа" (discipline) is a closed vocabulary, same tripling problem as
 --    category/scope/format -> store a KEY here, put the 3-locale label in
 --    _data/translations.js next to category/scope/format, not in this DB.
 --  * record_participants is the join table: it exists for BOTH individual
---    (1 row) and team (2-4 rows) records, carrying the per-athlete club and
+--    (1 row) and team (2-4 rows) records, carrying the per-athlete affiliation and
 --    per-athlete leg sub-scores ("287,284,289,287"), which vary per record
 --    even for the same athlete -> cannot live on the athlete row.
 --  * Dates on the source site are frequently partial ("?.2023") or ranges
@@ -37,13 +37,17 @@ CREATE TABLE cities (
   name_pl TEXT
 );
 
-CREATE TABLE clubs (
-  id   INTEGER PRIMARY KEY,
+CREATE TABLE affiliations (
+  id INTEGER PRIMARY KEY,
   key TEXT NOT NULL UNIQUE,
-  name TEXT NOT NULL UNIQUE,
-  name_en TEXT,
-  name_pl TEXT,
-  city INTEGER REFERENCES cities(id)
+  kind TEXT NOT NULL CHECK (kind IN ('city', 'region', 'country', 'club', 'federation', 'team', 'sports_school', 'university', 'organization')),
+  full_name TEXT, -- canonical full name in its original language; null when unknown/not applicable
+  full_name_language TEXT, -- ISO 639-1 code (e.g. uk, lt), independent of site locale codes
+  display_name_ua TEXT NOT NULL UNIQUE, -- localized labels shown in record tables
+  display_name_en TEXT,
+  display_name_pl TEXT,
+  city INTEGER REFERENCES cities(id),
+  CHECK ((full_name IS NULL) = (full_name_language IS NULL))
 );
 
 
@@ -84,7 +88,7 @@ CREATE TABLE record_participants (
   id         INTEGER PRIMARY KEY,
   record_id  INTEGER NOT NULL REFERENCES records(id) ON DELETE CASCADE,
   athlete_id INTEGER NOT NULL REFERENCES athletes(id),
-  club_id    INTEGER REFERENCES clubs(id),
+  affiliation_id INTEGER REFERENCES affiliations(id),
   position   INTEGER NOT NULL DEFAULT 1,  -- order within team; 1 for individual
   leg_scores TEXT                          -- e.g. '287,284,289,287'; nullable
 );
