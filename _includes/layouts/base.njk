@@ -90,9 +90,13 @@
 			</heading-anchors>
 		</main>
 
-		{# <footer>
-			<p><em>Built with <a href="https://www.11ty.dev/">{{ eleventy.generator }}</a></em></p>
-		</footer> #}
+		{% set footerLang = lang or page.lang or "ua" %}
+		<footer class="site-footer">
+			<p class="site-footer__content">
+				<span>{{ translations[footerLang].footer.maintainedBy }} <a href="{{ metadata.author.url }}">{{ metadata.author.name }}</a></span>
+				<a href="{{ metadata.repository }}">{{ translations[footerLang].footer.source }}</a>
+			</p>
+		</footer>
 
 		<!-- This page `{{ page.url }}` was built on {% currentBuildDate %} -->
 		<script type="module" src="{% getBundleFileUrl "js" %}"></script>

@@ -12,6 +12,7 @@ export default {
 		description: "Rekordy obwodu charkowskiego, Ukrainy i świata w halowym i otwartym łucznictwie bloczkowym wśród mężczyzn, kobiet i drużyn mieszanych, kadetów, juniorów i mastersów",
 	},
 	url: "https://compound-records.com/",
+	repository: "https://github.com/markogolovko/archery-records",
 	language: "ua",
 	ico: "/favicon.ico",
 	author: {

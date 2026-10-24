@@ -3,7 +3,8 @@ export default {
     dir: '',
     locale: 'uk_UA',
     name: 'Українська',
-    themeToggle: { light: 'Увімкнути світлу тему', dark: 'Увімкнути темну тему' }
+    themeToggle: { light: 'Увімкнути світлу тему', dark: 'Увімкнути темну тему' },
+    footer: { maintainedBy: 'Сайт веде', source: 'Код сайту' }
   },
   recordLabels: {
     disciplines: {
@@ -51,12 +52,14 @@ export default {
     dir: '',
     locale: 'en_EN',
     name: 'English',
-    themeToggle: { light: 'Enable light theme', dark: 'Enable dark theme' }
+    themeToggle: { light: 'Enable light theme', dark: 'Enable dark theme' },
+    footer: { maintainedBy: 'Maintained by', source: 'Source code' }
   },
   pl: {
     dir: '',
     locale: 'pl_PL',
     name: 'Polski',
-    themeToggle: { light: 'Włącz jasny motyw', dark: 'Włącz ciemny motyw' }
+    themeToggle: { light: 'Włącz jasny motyw', dark: 'Włącz ciemny motyw' },
+    footer: { maintainedBy: 'Stronę prowadzi', source: 'Kod źródłowy' }
   }
 }

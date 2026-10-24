@@ -108,6 +108,10 @@ html {
 }
 body {
 	max-width: 80em;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	min-height: 100dvh;
 }
 
 /* https://www.a11yproject.com/posts/how-to-hide-content/ */
@@ -159,6 +163,20 @@ a[href]:active {
 main,
 footer {
 	padding: 1rem;
+}
+main {
+	flex: 1;
+}
+.site-footer {
+	border-top: 1px dashed var(--color-gray-20);
+	font-size: 0.875rem;
+}
+.site-footer__content {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-xs) var(--space-m);
+	margin: 0;
 }
 main :first-child {
 	margin-top: 0;
