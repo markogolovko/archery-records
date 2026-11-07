@@ -93,7 +93,6 @@
 		{% set footerLang = lang or page.lang or "ua" %}
 		<footer class="site-footer">
 			<p class="site-footer__content">
-				<span>{{ translations[footerLang].footer.maintainedBy }} <a href="{{ metadata.author.url }}">{{ metadata.author.name }}</a></span>
 				<a href="{{ metadata.repository }}">{{ translations[footerLang].footer.source }}</a>
 			</p>
 		</footer>
